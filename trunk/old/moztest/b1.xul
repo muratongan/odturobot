@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<script src="chrome://robot/content/connection.js"/>
+<script src="chrome://robot/content/b1.js"/>
+<script>
+var sobj1;
+var sobj2;
+</script>
+<button label="b1 start" onclick="sobj1=new B1();"/>
+<button label="b1 kill" onclick="sobj1.kill();"/>
+<button label="b2 start" onclick="sobj2=new B2();"/>
+<button label="b2 kill" onclick="sobj2.kill();"/>
+</window>
