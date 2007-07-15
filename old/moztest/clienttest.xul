@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<script src="chrome://robot/content/connection.js"/>
+<script>
+function Testclient()
+{
+	this.recv=function(str)
+	{
+		alert(str);
+	};
+	var cli=new Client(this.recv);
+	this.disconnect=function()
+	{
+		cli.connection.close();
+	};
+	this.req=function()
+	{
+		cli.connection.send("Hola");
+	};
+};
+var cobj;
+</script>
+
+<button label="connect" onclick="cobj=new Testclient();"/>
+<button label="disconnect" onclick="cobj.disconnect();"/>
+<button label="request" onclick="cobj.req();"/>
+</window>
