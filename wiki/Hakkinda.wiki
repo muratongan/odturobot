@@ -1,0 +1,9 @@
+#summary Robot Projesinin Detayları
+#labels Featured,Phase-Design
+= Giriş =
+Bu projede elimizdeki Pioneer 3 DX model bir robot tabanını programlayarak, çeşitli alanlarda kullanılabilecek akıllı bir robot oluşturmayı amaçlıyoruz.
+= Yazılım Katmanları =
+http://code.google.com/p/odturobot/files/robot.png
+Robotla seri port vasıtasıyla iletişim kuran ve temel fonksiyonların yerine getirilmesini sağlayan katman, player'dır. Bunun üstünde, robot tehlikeli bir durumdayken (duvara çok yakınken) onu durdurmaya yarayan ve üstteki parçalarla iletişimi sağlayan watchdog yer alır. Çeşitli davranışlardan aldığı farklı komutlar arasında karar verip watchdog'a ileten ise arbitrator (hakem) katmanıdır. Watchdog, sadece belli, küçük bir işi yapmak üzere hazırlanmış behaviour denen davranışlara bağlıdır. Bunlar da robotun yapacağı ana görevi bilen ve davranışları ona göre yönlendiren planner katmanına bağlıdır.
+
+Bu modelde tüm katmanlar, birbirleri ile TCP/IP aracılığıyla haberleşmektedir. Bu yapı sayesinde her bir parça sadece kendi yapacağı işle ilgilenir ve basitlik sağlanır. Robotun yapacağı göreve göre diğer katmanlara dokunmadan yalnızca player katmanı değiştirilerek, robotun istenen herhangi bir işlevi gerçekleştirmesi sağlanabilir. 
