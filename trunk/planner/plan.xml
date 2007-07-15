@@ -1,0 +1,65 @@
+<plan>
+    
+    <behaviours>
+        <behaviour name="DetectPeople" />
+        <behaviour name="SayHello" />
+        <behaviour name="LineTracking" />
+        <behaviour name="ObstacleAvoidance" />
+        <behaviour name="DetectMarker" />
+        <behaviour name="Explain" />
+        <behaviour name="SayGoodbye" />
+    </behaviours>
+    
+    <states>
+        <state name="WaitPeople">
+            <behaviours>
+                <behaviour name="DetectPeople" />
+            </behaviours>
+            <transitions>
+                <transition expression="DetectPeople=detected" nextstate="SayHello" />
+            </transitions>
+        </state>
+        
+        <state name="Welcome">
+            <behaviours>
+                <behaviour name="SayHello" />
+            </behaviours>
+            <transitions>
+                <transition expression="Welcome=finished" nextstate="FindMarker" />
+            </transitions>
+        </state>
+        
+        <state name="FindMarker">
+            <behaviours>
+                <behaviour name="LineTracking" />
+                <behaviour name="ObstacleAvoidance" />
+                <behaviour name="DetectMarker" />
+            </behaviours>
+            <transitions>
+                <transition expression="DetectMarker=standartmarker" nextstate="Explain" />
+                <transition expression="DetectMarker=endmarker" nextstate="Finish" />
+            </transitions>
+        </state>
+        
+        <state name="Explain">
+            <behaviours>
+                <behaviour name="Explain" />
+            </behaviours>
+            <transitions>
+                <transition expression="Explain=finished" nextstate="FindMarker" />
+            </transitions>
+        </state>
+    
+        <state name="Finish">
+            <behaviours>
+                <behaviour name="SayGoodbye" />
+            </behaviours>
+            <transitions>
+                <transition expression="Explain=finished" nextstate="FindMarker" />
+            </transitions>
+        </state>
+        
+    </states>
+    
+    <start>Wait People</start>
+</plan>
