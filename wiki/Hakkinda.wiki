@@ -3,7 +3,7 @@
 = Giriş =
 Bu projede elimizdeki Pioneer 3 DX model bir robot tabanını programlayarak, çeşitli alanlarda kullanılabilecek akıllı bir robot oluşturmayı amaçlıyoruz.
 = Yazılım Katmanları =
-http://www.cclub.metu.edu.tr/robot/robot.png
+http://www.cclub.metu.edu.tr/robot/tasarim.png
 
 Robotla seri port vasıtasıyla iletişim kuran ve temel fonksiyonların yerine getirilmesini sağlayan katman, player'dır. Bunun üstünde, robot tehlikeli bir durumdayken (duvara çok yakınken) onu durdurmaya yarayan ve üstteki parçalarla iletişimi sağlayan watchdog yer alır. Çeşitli davranışlardan aldığı farklı komutlar arasında karar verip watchdog'a ileten ise arbitrator (hakem) katmanıdır. Watchdog, sadece belli, küçük bir işi yapmak üzere hazırlanmış behaviour denen davranışlara bağlıdır. Bunlar da robotun yapacağı ana görevi bilen ve davranışları ona göre yönlendiren planner katmanına bağlıdır.
 
