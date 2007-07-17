@@ -1,0 +1,30 @@
+#summary Player programının bilgisayara kurulması
+#labels Phase-Deploy
+
+Player yazılımı, player projesinin bir parçasıdır. Robot kontrolü için donanımdan bağımsız bir platform oluşturmayı sağlar. Projemizde, robotla iletişim kurmak için player kütüphanesini kullanıyoruz.
+
+=Kurulum=
+Player programını Pardus'ta aşağıdaki adımları izleyerek bulabilirsiniz. Diğer Linux dağıtımlarında da benzer şekilde kurulumu yapılabilir. Bazı dağıtımlar, bu yazılımı paket olarak da sağlayabilirler.
+* Önce http://playerstage.sf.net adresinin “download” kısmına girip player-2.0.3.tar.bz2 ve stage-2.0.3.tar.bz2 dosyalarını ev dizinimize indiriyoruz.
+* Konsol/terminal programını açıp ev dizinimizde root yetkisine kavuşmak için “su -” yazıp şifremizi giriyoruz.
+* Ardından arşivleri açıyoruz:
+{{{
+tar xvf player-2.0.2.tar.bz2
+tar xvf stage-2.0.3.tar.bz2
+}}}
+* Player programını kurmak için gerekli dizine girip, çıkan kamera hatasıya karşılaşmamak için gerekli ayarı yapıp kuruyoruz:
+{{{
+cd player-2.0.2
+./configure --disable-camerauvc
+make install
+}}}
+* Bu işlemler esnasında libGL ile ilgili bir hata geçerse
+{{{
+link /usr/lib/libGLw.so /usr/lib/libGL.so
+}}}
+komutuyla dosya konumuna bağlantı koyuyoruz. Bir aksilik çıkmazsa player'ın kurulumu tamamlanmış olacak. Yeni yüklenen programın yolunun eklenmemesi nedeniyle oluşan hatayı gidermek için
+{{{
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+}}}
+yazmamız gerekiyor. Artık, player ile robotumuzu kontrol etmeye başlayabiliriz.
+ 
