@@ -1,4 +1,4 @@
-<plan>
+<plan start="WaitPeople">
     
     <behaviours>
         <behaviour name="DetectPeople" />
@@ -16,7 +16,7 @@
                 <behaviour name="DetectPeople" />
             </behaviours>
             <transitions>
-                <transition expression="DetectPeople=detected" nextstate="SayHello" />
+                <transition expression="DetectPeople=detected" nextstate="Welcome" />
             </transitions>
         </state>
         
@@ -25,7 +25,7 @@
                 <behaviour name="SayHello" />
             </behaviours>
             <transitions>
-                <transition expression="Welcome=finished" nextstate="FindMarker" />
+                <transition expression="SayHello=finished" nextstate="FindMarker" />
             </transitions>
         </state>
         
@@ -60,6 +60,5 @@
         </state>
         
     </states>
-    
-    <start>Wait People</start>
+
 </plan>
