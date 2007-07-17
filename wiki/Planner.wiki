@@ -1,0 +1,4 @@
+#summary Planner katmanının tasarımı
+#labels Phase-Design
+
+Robotun yapacağı ana görevi, bir XML dosyasından okuyarak, gerekli davranışları aktif hale getirmekten ve sonraki adımlarda davranışların açılıp kapatılmasından sorumlu katmandır. Bu katman sayesinde robotun yapacağı iş değişse bile, program tasarımını değiştirmeye gerek kalmadan, sadece bir XML dosyasını düzenleyerek amaca ulaşmak mümkün olur.
