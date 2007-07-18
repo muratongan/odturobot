@@ -2,12 +2,10 @@
     
     <behaviours>
         <behaviour name="DetectPeople" />
-        <behaviour name="SayHello" />
+        <behaviour name="Voice" />
         <behaviour name="LineTracking" />
         <behaviour name="ObstacleAvoidance" />
         <behaviour name="DetectMarker" />
-        <behaviour name="Explain" />
-        <behaviour name="SayGoodbye" />
     </behaviours>
     
     <states>
@@ -22,10 +20,10 @@
         
         <state name="Welcome">
             <behaviours>
-                <behaviour name="SayHello" />
+                <behaviour name="Voice" arguments="welcome.wav"/>
             </behaviours>
             <transitions>
-                <transition expression="SayHello=finished" nextstate="FindMarker" />
+                <transition expression="Voice=finished" nextstate="FindMarker" />
             </transitions>
         </state>
         
@@ -43,19 +41,19 @@
         
         <state name="Explain">
             <behaviours>
-                <behaviour name="Explain" />
+                <behaviour name="Voice" arguments="hello.wav"/>
             </behaviours>
             <transitions>
-                <transition expression="Explain=finished" nextstate="FindMarker" />
+                <transition expression="Voice=finished" nextstate="FindMarker" />
             </transitions>
         </state>
     
         <state name="Finish">
             <behaviours>
-                <behaviour name="SayGoodbye" />
+                <behaviour name="Voice" arguments="welcome.wav"/>
             </behaviours>
             <transitions>
-                <transition expression="Explain=finished" nextstate="FindMarker" />
+                <transition expression="Voice=finished" nextstate="FindMarker" />
             </transitions>
         </state>
         
