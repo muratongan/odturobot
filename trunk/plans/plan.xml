@@ -1,13 +1,5 @@
 <plan start="WaitPeople">
     
-    <behaviours>
-        <behaviour name="DetectPeople" />
-        <behaviour name="Voice" />
-        <behaviour name="LineTracking" />
-        <behaviour name="ObstacleAvoidance" />
-        <behaviour name="DetectMarker" />
-    </behaviours>
-    
     <states>
         <state name="WaitPeople">
             <behaviours>
