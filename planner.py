@@ -13,10 +13,6 @@ class Planner:
         self.states = []
         self.state = None
         dom = parse(filename)
-        # Get Behaviour List:
-        behlist = dom.getElementsByTagName("behaviours")[0].getElementsByTagName("behaviour")
-        for beh in behlist:
-            self.behaviours.append(beh.getAttribute("name"))
         # Get State List:
         statelist = dom.getElementsByTagName("states")[0].getElementsByTagName("state")
         for state in statelist:
