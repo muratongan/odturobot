@@ -26,7 +26,9 @@ class Planner:
     
     def printPlan(self):
         "Prints the details of the plan"
-        print "Behaviours:", self.behaviours
+        print "Behaviours:"
+        for beh in self.behaviours:
+            print " " * 4 + beh
         print "States:"
         for state in self.states:
             state.printState(4)
@@ -70,8 +72,6 @@ class Planner:
                         if not beh["popen"].poll():
                             self.active.remove(beh)
                 self.signals[name] = a
-            # Print signals:
-            print self.signals
             # Control Transitions:
             next = self.nextTransition()
             if next:
@@ -108,8 +108,10 @@ class State:
             self.transitions.append({"expression":trans.getAttribute("expression"), "nextstate":trans.getAttribute("nextstate")})
    
     def printState(self, indent=0):
-        print indent * " " + "State Name:", self.name
-        print indent * " " + "Behaviours:", self.behaviours
-        print indent * " " + "Transitions:"
+        print indent * " " + self.name
+        print (indent + 4) * " " + "Behaviours:"
+        for beh in self.behaviours:
+            print (indent + 8) * " " + beh
+        print (indent + 4) * " " + "Transitions:"
         for trans in self.transitions:
-            print (indent + 4) * " ", trans
+            print (indent + 8) * " ", trans
