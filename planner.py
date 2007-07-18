@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+import os
+import subprocess
+import select
 from xml.dom.minidom import parse
 
 
@@ -8,7 +11,7 @@ class Planner:
         "Reads plan file and parses it, initializes planner object"
         self.behaviours = []
         self.states = []
-        self.start = None
+        self.state = None
         dom = parse(filename)
         # Get Behaviour List:
         behlist = dom.getElementsByTagName("behaviours")[0].getElementsByTagName("behaviour")
@@ -19,7 +22,7 @@ class Planner:
         for state in statelist:
             self.states.append(State(state))
         # Get Start State:
-        self.start = dom.documentElement.getAttribute("start")
+        self.state = dom.documentElement.getAttribute("start")
     
     def printPlan(self):
         "Prints the details of the plan"
@@ -37,12 +40,55 @@ class Planner:
     
     def run(self):
         "Starts the machine"
-        self.changeState(self.start)
+        self.changeState(self.state)
     
     def changeState(self, statename):
         "Changes the active state of the machine"
-        state = self.getState(statename)
-        state.printState()
+        self.active = []
+        self.signals = {}
+        self.state = self.getState(statename)
+        for beh in self.state.behaviours:
+            p = subprocess.Popen(["./behaviours/" + beh], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            self.active.append({"name":beh, "popen":p, "stdin":p.stdin, "stdout":p.stdout, "pid":p.pid})
+        self.state.printState()
+        self.listen()
+    
+    def listen(self):
+        while True:
+            inputlist = []
+            # Control active behaviours:
+            for beh in self.active:
+                inputlist.append(beh["stdout"])
+            # If there is a signal, get it:
+            ins, outs, errs = select.select(inputlist, [], [])
+            for insock in ins:
+                a = insock.read()
+                name = ""
+                for beh in self.active:
+                    if beh["stdout"] == insock:
+                        name = beh["name"]
+                        if not beh["popen"].poll():
+                            self.active.remove(beh)
+                self.signals[name] = a
+            # Print signals:
+            print self.signals
+            # Control Transitions:
+            next = self.nextTransition()
+            if next:
+                for beh in self.active:
+                    os.kill(beh["pid"], 0)
+                self.changeState(next)
+            # If there is no active behaviour, end function:
+            if not self.active:
+                return
+            
+    def nextTransition(self):
+        for trans in self.state.transitions:
+            key, value = trans["expression"].split("=")
+            if self.signals.has_key(key):
+                if self.signals[key] == value:
+                    return trans["nextstate"]
+        return None
 
 
 class State:
@@ -67,9 +113,3 @@ class State:
         print indent * " " + "Transitions:"
         for trans in self.transitions:
             print (indent + 4) * " ", trans
-
-
-if __name__ == "__main__":
-    plan = Planner("plan.xml")
-    #plan.printPlan()
-    plan.run()
