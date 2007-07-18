@@ -50,8 +50,12 @@ class Planner:
         self.signals = {}
         self.state = self.getState(statename)
         for beh in self.state.behaviours:
-            p = subprocess.Popen(["./behaviours/" + beh], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-            self.active.append({"name":beh, "popen":p, "stdin":p.stdin, "stdout":p.stdout, "pid":p.pid})
+            command = ["./behaviours/" + beh["name"]]
+            if beh.has_key("arguments"):
+                command.append(beh["arguments"])
+            print "command", command
+            p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            self.active.append({"name":beh["name"], "popen":p, "stdin":p.stdin, "stdout":p.stdout, "pid":p.pid})
         self.state.printState()
         self.listen()
     
@@ -101,7 +105,11 @@ class State:
         # Get Behaviour List:
         behlist = statenode.getElementsByTagName("behaviours")[0].getElementsByTagName("behaviour")
         for beh in behlist:
-            self.behaviours.append(beh.getAttribute("name"))
+            behdict = {}
+            behdict["name"] = beh.getAttribute("name")
+            if beh.hasAttribute("arguments"):
+                behdict["arguments"] = beh.getAttribute("arguments")
+            self.behaviours.append(behdict)
         # Get Transition List:
         translist = statenode.getElementsByTagName("transitions")[0].getElementsByTagName("transition")
         for trans in translist:
@@ -111,7 +119,7 @@ class State:
         print indent * " " + self.name
         print (indent + 4) * " " + "Behaviours:"
         for beh in self.behaviours:
-            print (indent + 8) * " " + beh
+            print (indent + 8) * " " + beh["name"]
         print (indent + 4) * " " + "Transitions:"
         for trans in self.transitions:
             print (indent + 8) * " ", trans

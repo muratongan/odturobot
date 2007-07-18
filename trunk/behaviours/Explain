@@ -1,7 +1,0 @@
-#!/usr/bin/python
-
-import time
-import sys
-
-time.sleep(2)
-sys.stdout.write("finished")
