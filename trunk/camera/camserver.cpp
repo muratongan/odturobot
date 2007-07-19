@@ -121,7 +121,6 @@ int main(void)
                         {
                             mycam.capture();
                             int* a = mycam.getCircles();
-                            printf("OK");
                             
                             int j;
                             for( j= 0; j < a[0]; j++ )
@@ -133,7 +132,6 @@ int main(void)
 			    cvNamedWindow("circles", 1);                            
                             cvShowImage( "circles", mycam.frame );
                             if( (cvWaitKey(10) & 255) == 27 ) break;
-			    printf("ok");
 			    fflush(stdout);
                             int size;
                             size = a[0]*3+1;
