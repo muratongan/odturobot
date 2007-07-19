@@ -34,6 +34,7 @@
         <state name="Explain">
             <behaviours>
                 <behaviour name="Voice" arguments="hello.wav"/>
+		<behaviour name="Stop" />
             </behaviours>
             <transitions>
                 <transition expression="Voice=finished" nextstate="FindMarker" />
@@ -43,9 +44,9 @@
         <state name="Finish">
             <behaviours>
                 <behaviour name="Voice" arguments="welcome.wav"/>
+		<behaviour name="Stop" />
             </behaviours>
             <transitions>
-                <transition expression="Voice=finished" nextstate="FindMarker" />
             </transitions>
         </state>
         

@@ -9,13 +9,16 @@ int main(void)
     while(true) {
         circle_info = client.getCircles();
         if(circle_info[0]==2) {
-            cout<<"standartmarker";
+            cout<<"standartmarker"<<flush;
+            cerr<<"standartmarker";
             return 0;
         }
         else if(circle_info[0]==3) {
-            cout<<"endmarker";
+            cout<<"endmarker"<<flush;
+            cerr<<"endmarker";
             return 0;
         }
      } 
+	sleep(1);
     return 0;
 }

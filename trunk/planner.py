@@ -72,6 +72,7 @@ class Planner:
                         if not beh["popen"].poll():
                             self.active.remove(beh)
                 self.signals[name] = a
+		print "Signal %s: %s" % (name, a)
             # Control Transitions:
             next = self.nextTransition()
             if next:
