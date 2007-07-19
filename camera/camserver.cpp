@@ -77,6 +77,10 @@ int main(void)
     // en büyük dosya tanimlayicisi hatirla
     fdmax = listener; // so far, it's this one
 
+    cvNamedWindow( "Marker", 1 );
+    cvNamedWindow( "Line", 1 );
+
+
     // ana döngü
     for(;;) {
         read_fds = master; // copy it
@@ -129,8 +133,7 @@ int main(void)
                                      cvCircle( mycam.frame, cvPoint(a[3*j+1],a[3*j+2]), a[3*j+3], CV_RGB(255,0,0), 3, 8, 0 );
                                 }
                                                     
-			    cvNamedWindow("circles", 1);                            
-                            cvShowImage( "circles", mycam.frame );
+                            cvShowImage( "Marker", mycam.frame );
                             if( (cvWaitKey(10) & 255) == 27 ) break;
 			    fflush(stdout);
                             int size;
@@ -145,11 +148,11 @@ int main(void)
                             int j;
                             for( j= 0; j < a[0]; j++ )
                                 {
-                                     cvLine( color_dst, cvPoint(a[4*j+1],a[4*j+2]), cvPoint(a[4*j+3],a[4*j+4]), CV_RGB(255,0,0), 3, 8 );
+                                     cvLine( mycam.frame,
+cvPoint(a[4*j+1],a[4*j+2]), cvPoint(a[4*j+3],a[4*j+4]), CV_RGB(255,0,0), 3, 8 );
                                 }
                             
-                            cvNamedWindow( "Hough", 1 );
-                            cvShowImage( "Hough", mycam.frame );
+                            cvShowImage( "Line", mycam.frame );
                                                 
                             int size;
                             size = a[0]*4+1;

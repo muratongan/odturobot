@@ -1,6 +1,8 @@
 #include "../camera/camclient.h"
 #include "socket.h"
 
+#include <iostream>
+
 using namespace std;
 
 int* getMiddlePoint(int*);
@@ -13,22 +15,29 @@ int main(void)
     int* mycenter;
     int* line_info;
     int line_count;
+	cerr << "findline basladi\n" << flush;
     
+	cerr << "findline davrandi\n" << flush;
+
     while(true) {
+
         line_info = client.getLines();
-        if(line_info[0]>0) 
+        if(line_info[0]>0)
             {
-                center= getMiddlePoint(line_info);
+	cerr << "findline cizgi buldu\n" << flush;
+		Hakem.Davran(-0.2, 0, 10);
+
+           /*     center= getMiddlePoint(line_info);
                 mycenter= client.getInfo();
                 if(mycenter[0]/2>center[0]) {       // line solda
-                    Hakem.Davran(0.3, 0.2, 3);
+                    Hakem.Davran(0.2, 0.2, 10);
                 }
                 else if(mycenter[0]/2<center[0]) {  // line sagda
-                    Hakem.Davran(0.3, -0.2, 3);
+                    Hakem.Davran(0.2, -0.2, 10);
                 }
                 else{    // ilerle
-                    Hakem.Davran(0.3, 0, 3);
-                }
+                    Hakem.Davran(0.2, 0, 10);
+                }*/
              //   cout<<"line_detected";
              //   return 0;
             }

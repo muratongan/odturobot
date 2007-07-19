@@ -62,9 +62,10 @@ int *Kamera::getLines()
     IplImage* color_dst = cvCreateImage( cvGetSize(frame), 8, 3 );
     CvMemStorage* storage = cvCreateMemStorage(0);
     CvSeq* lines = 0;
-    cvCvtColor( frame, frame, CV_BGR2GRAY );
-    cvCanny( frame, frame, 50, 200, 3 );
-    lines = cvHoughLines2( frame, storage, CV_HOUGH_STANDARD, 1, CV_PI/180, 100, 0, 0 );
+    cvCvtColor( frame, dst, CV_BGR2GRAY );
+    cvCanny( dst, dst, 50, 200, 3 );
+    lines = cvHoughLines2( dst, storage, CV_HOUGH_STANDARD, 1, 
+CV_PI/180, 100, 0, 0 );
 
     count_line=lines->total;         //number of lines in the image
     line_info=(int*)malloc(sizeof(int)*(count_line*4+1));
