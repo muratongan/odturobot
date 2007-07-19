@@ -31,7 +31,7 @@ CamClient::CamClient(int port)
 void CamClient::sendAll(char* veri)
 {
     int giden = 0;
-    int boyut = strlen(veri);
+    int boyut = strlen(veri) + 1;
     while (giden<boyut)
     {
         giden += send(soketim, veri, boyut-giden, 0);
@@ -55,6 +55,8 @@ int* CamClient::getCircles()
 
 int* CamClient::getLines()
 {
+	printf("client: getlines");
+	fflush(stdout);
     int * array;
     char* istek = "getLines";
     sendAll(istek);
