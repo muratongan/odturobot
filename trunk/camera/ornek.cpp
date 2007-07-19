@@ -2,15 +2,17 @@
 
 int main(void)
 {
-    client = Soket(9034);
+    Soket client(9034);
     int * array;
-    array = client.getLines();
-    printf("%d\n", array[0]);
-    for (int i=1; i<array[0]+1; i++)
+    while (1)
     {
-        printf("%d ", array[i]);
+        array = client.getCircles();
+        for (int i=1; i<array[0]*3+1; i++)
+        {
+            printf("%d ", array[i]);
+        }
+        if (array[0]>0) printf("\n");
     }
-    printf("%d\n");
     return 0;
 }
 

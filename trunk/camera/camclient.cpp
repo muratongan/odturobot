@@ -1,10 +1,10 @@
-#include "socket.h"
+#include "camclient.h"
 #include <sstream>
 
-Soket::Soket(int port)
+CamClient::CamClient(int port)
 {
 
-		// Soketini Yarat
+		// CamClientini Yarat
 	    if ((soketim = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 			throw soket_olusturulamadi;
 
@@ -20,7 +20,7 @@ Soket::Soket(int port)
 	    their_addr.sin_addr.s_addr = INADDR_ANY; // otomatik olarak IP'mi kullan
 	    memset(&(their_addr.sin_zero), '\0', 8); // geriye kalan bölgeyi sifirla
 
-		// Dinleme Soketini Gerekli Porta Bağla
+		// Dinleme CamClientini Gerekli Porta Bağla
 		if (connect(soketim, (struct sockaddr *)&their_addr, sizeof(struct sockaddr)) == -1) 
 		{
 	        perror("connect");
@@ -28,31 +28,54 @@ Soket::Soket(int port)
 	    }
 }
 
-int* Soket::getCircles()
+void CamClient::sendAll(char* veri)
 {
-    int * array;
+    int giden = 0;
+    int boyut = strlen(veri);
+    while (giden<boyut)
+    {
+        giden += send(soketim, veri, boyut-giden, 0);
+    }
+}
+
+int* CamClient::getCircles()
+{
+    int * array, alinan;
     char* istek = "getCircles";
-    send(soketim, istek, sizeof(istek), 0);
-    array = malloc(1, sizeof(int))
-    recv(soketim, array[0], sizeof(int), 0);
-    array = malloc(1 + array[0] * 3, sizeof(int));
-    recv(soketim, number, sizeof(int), 0);
+    sendAll(istek);
+    array = (int *) malloc(1 * sizeof(int));
+    recv(soketim, array, sizeof(int), 0);
+    if (array[0] > 0)
+    {
+        array = (int *) realloc(array, (1 + array[0] * 3) * sizeof(int));
+        alinan = recv(soketim, array+1, array[0] * 3 * sizeof(int), 0);
+    }
     return array;
 }
 
-int* Soket::getLines()
+int* CamClient::getLines()
 {
     int * array;
     char* istek = "getLines";
-    send(soketim, istek, sizeof(istek), 0);
-    array = malloc(1, sizeof(int))
-    recv(soketim, array[0], sizeof(int), 0);
-    array = malloc(1 + array[0] * 4, sizeof(int));
-    recv(soketim, number, sizeof(int), 0);
+    sendAll(istek);
+    array = (int *) malloc(sizeof(int));
+    recv(soketim, array, sizeof(int), 0);
+    array = (int *) realloc(array, (1 + array[0] * 4) * sizeof(int));
+    recv(soketim, array+1, array[0] * 4 * sizeof(int), 0);
     return array;
 }
 
-Soket::~Soket()
+int* CamClient::getInfo()
+{
+    int *array;
+    char* istek = "getInfo";
+    sendAll(istek);
+    array = (int *) malloc(2 * sizeof(int));
+    recv(soketim, array, 2 * sizeof(int), 0);
+    return array;
+}
+
+CamClient::~CamClient()
 {
 	close(soketim);
 }

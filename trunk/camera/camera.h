@@ -11,10 +11,10 @@ class Kamera
 {
     private:
         CvCapture* device;
-        IplImage* frame;
     public:
         Kamera();
         ~Kamera();
+        IplImage* frame;
         void capture();
         int* getCircles();
         int* getLines();
