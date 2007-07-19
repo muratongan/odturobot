@@ -1,15 +1,22 @@
+//opencv lib
+#include <cv.h>         
+#include <highgui.h>    
+#include <math.h>
+
+#include <iostream>
+
 using namespace std;
 
 class Kamera
 {
     private:
-        CvCapture* capture;
+        CvCapture* device;
         IplImage* frame;
     public:
         Kamera();
         ~Kamera();
         void capture();
-        int* getCircle();
-        int* getLine()
+        int* getCircles();
+        int* getLines();
         
-}
+};
