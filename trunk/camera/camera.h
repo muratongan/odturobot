@@ -18,5 +18,5 @@ class Kamera
         void capture();
         int* getCircles();
         int* getLines();
-        
+	int* getInfo();        
 };

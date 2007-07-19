@@ -95,5 +95,9 @@ int *Kamera::getLines()
 
 int *Kamera::getInfo()
 { 
-    return cvGetSize(frame)
+	int *size;
+	size = (int *) malloc(2*sizeof(int));
+	size[0] = cvGetSize(frame).width;
+	size[1] = cvGetSize(frame).height;
+    return size;
 }

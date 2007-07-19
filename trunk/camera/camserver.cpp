@@ -78,7 +78,6 @@ int main(void)
     fdmax = listener; // so far, it's this one
 
     // ana döngü
-        cvNamedWindow( "circles", 1 );
     for(;;) {
         read_fds = master; // copy it
         if (select(fdmax+1, &read_fds, NULL, NULL, NULL) == -1) {
@@ -131,10 +130,11 @@ int main(void)
                                      cvCircle( mycam.frame, cvPoint(a[3*j+1],a[3*j+2]), a[3*j+3], CV_RGB(255,0,0), 3, 8, 0 );
                                 }
                                                     
-                            
+			    cvNamedWindow("circles", 1);                            
                             cvShowImage( "circles", mycam.frame );
                             if( (cvWaitKey(10) & 255) == 27 ) break;
-                            fflush(stdout);
+			    printf("ok");
+			    fflush(stdout);
                             int size;
                             size = a[0]*3+1;
                             size = send(i, a, size * sizeof(int), 0);
