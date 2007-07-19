@@ -149,7 +149,7 @@ int main(void)
                                 }
                             
                             cvNamedWindow( "Hough", 1 );
-                            cvShowImage( "Hough", color_dst );
+                            cvShowImage( "Hough", mycam.frame );
                                                 
                             int size;
                             size = a[0]*4+1;
