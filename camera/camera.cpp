@@ -1,29 +1,31 @@
+#include "camera.h"
+
 Kamera::Kamera()
 {
-  capture = cvCaptureFromCAM( CV_CAP_ANY );
-  if( !capture ) {
+  device = cvCaptureFromCAM( CV_CAP_ANY );
+  if( !device ) {
     fprintf( stderr, "ERROR: capture is NULL \n" );
     getchar();
-    return -1;
+    throw 0;
   }
 }
 
 void Kamera::capture()
 {
-    frame = cvQueryFrame( capture );
+    frame = cvQueryFrame( device );
     if( !frame ) {
       fprintf( stderr, "ERROR: frame is null...\n" );
       getchar();
-      break;
+      throw 0;
     }
 }
 
 Kamera::~Kamera()
 {
-    cvReleaseCapture( &capture );
+    cvReleaseCapture( &device );
 }
 
-int *Kamera::getCircle()
+int *Kamera::getCircles()
 {
     int count_circle;
     int* circle_info;
@@ -51,20 +53,21 @@ int *Kamera::getCircle()
     return circle_info;
 }
 
-int *Kamera::getLine()
+int *Kamera::getLines()
 {
     int count_line;
     int *line_info;   
     
+    IplImage* dst = cvCreateImage( cvGetSize(frame), 8, 1 );
     IplImage* color_dst = cvCreateImage( cvGetSize(frame), 8, 3 );
     CvMemStorage* storage = cvCreateMemStorage(0);
     CvSeq* lines = 0;
-    cvCanny( src, dst, 50, 200, 3 );
+    cvCanny( frame, dst, 50, 200, 3 );
     cvCvtColor( dst, color_dst, CV_GRAY2BGR );
     lines = cvHoughLines2( dst, storage, CV_HOUGH_STANDARD, 1, CV_PI/180, 100, 0, 0 );
 
     count_line=lines->total;         //number of lines in the image
-    line_info=(int*)malloc(sizeof(int)*(count_lines*4+1));
+    line_info=(int*)malloc(sizeof(int)*(count_line*4+1));
     line_info[0]=count_line;    
 
     int i = 0;int t = 1;
@@ -81,10 +84,10 @@ int *Kamera::getLine()
             pt2.x = cvRound(x0 - 1000*(-b));
             pt2.y = cvRound(y0 - 1000*(a));
             
-            circle_info[t] = pt1.x;     // x coordinate of the point1
-            circle_info[t+1] = pt1.y;   // y coordinate of the point1
-            circle_info[t+2] = pt2.x;   // x coordinate of the point2
-            circle_info[t+3] = pt2.y;   // y coordinate of the point2
+            line_info[t] = pt1.x;     // x coordinate of the point1
+            line_info[t+1] = pt1.y;   // y coordinate of the point1
+            line_info[t+2] = pt2.x;   // x coordinate of the point2
+            line_info[t+3] = pt2.y;   // y coordinate of the point2
             t = t+4;   
         }
     return line_info;
