@@ -32,7 +32,7 @@ int main(void)
     int addrlen;
     int i, j;
     
-    Kamera mycam();
+    Kamera mycam;
 
     FD_ZERO(&master);    // ana listeyi ve gecici listeyi temizle
     FD_ZERO(&read_fds);
