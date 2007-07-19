@@ -3,6 +3,6 @@
 import sys
 import commands
 
-komut = "playsound data/voices/"+sys.argv[1]
+komut = "mplayer data/voices/"+sys.argv[1]
 commands.getoutput(komut)
 sys.stdout.write("finished")
