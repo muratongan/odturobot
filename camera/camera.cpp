@@ -93,3 +93,7 @@ int *Kamera::getLines()
     return line_info;
 }
 
+int *Kamera::getInfo()
+{ 
+    return cvGetSize(frame)
+}

@@ -66,6 +66,11 @@ int main(void)
         exit(1);
     }
 
+
+
+
+
+
     // dinleyici soketi ana listeye ekle
     FD_SET(listener, &master);
 
@@ -73,6 +78,7 @@ int main(void)
     fdmax = listener; // so far, it's this one
 
     // ana döngü
+        cvNamedWindow( "circles", 1 );
     for(;;) {
         read_fds = master; // copy it
         if (select(fdmax+1, &read_fds, NULL, NULL, NULL) == -1) {
@@ -116,21 +122,39 @@ int main(void)
                         {
                             mycam.capture();
                             int* a = mycam.getCircles();
+                            printf("OK");
+                            
+                            int j;
+                            for( j= 0; j < a[0]; j++ )
+                                {
+                                     cvCircle( mycam.frame, cvPoint(a[3*j+1],a[3*j+2]), 3, CV_RGB(0,255,0), -1, 8, 0 );
+                                     cvCircle( mycam.frame, cvPoint(a[3*j+1],a[3*j+2]), a[3*j+3], CV_RGB(255,0,0), 3, 8, 0 );
+                                }
+                                                    
+                            
+                            cvShowImage( "circles", mycam.frame );
+                            if( (cvWaitKey(10) & 255) == 27 ) break;
+                            fflush(stdout);
                             int size;
-                            size = a[0]*3+1
-                            send(i, a, size, 0);
+                            size = a[0]*3+1;
+                            size = send(i, a, size * sizeof(int), 0);
                         }
                         else if (strcmp(buf, "getLines") == 0)
                         {
                             mycam.capture();
                             int* a = mycam.getLines();
                             int size;
-                            size = a[0]*4+1
-                            send(i, a, size, 0);
+                            size = a[0]*4+1;
+                            send(i, a, size * sizeof(int), 0);
+                        }
+                        else if (strcmp(buf, "getInfo") == 0)
+                        {
+                            int* a = mycam.getInfo();
+                            send(i, a, 2 * sizeof(int), 0);
                         }
 
                     }
-                } // O KADAR CIRKIN ki!
+                }
             }
         }
     }

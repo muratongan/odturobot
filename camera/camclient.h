@@ -14,15 +14,17 @@ using namespace std;
 #define soket_gonderilemiyor 4
 #define baglanti_koptu 5
 
-class Soket
+class CamClient
 {
 	private:
 		int soketim;		
 	    struct sockaddr_in my_addr;    // adres bilgim
 	    struct sockaddr_in their_addr; // bağlananın adres bilgisi
 	public:
-		Soket(int);
-		~Soket();
+		CamClient(int);
+		~CamClient();
+		void sendAll(char*);
         int* getCircles();
         int* getLines();
+        int* getInfo();
 };
