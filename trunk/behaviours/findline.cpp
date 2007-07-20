@@ -46,7 +46,8 @@ int main(void)
 int* getMiddlePoint(int *line_info){
     int x_center,y_center;
     int x1_total=0,y1_total=0,x2_total=0,y2_total=0;
-    int center[2];
+    int* center;
+    center = (int *) malloc(2 * sizeof(int));
     int line_count = line_info[0];
     for(int i = 1;i<=line_count;i=i+4) {
         x1_total = x1_total+line_info[i];
@@ -59,5 +60,4 @@ int* getMiddlePoint(int *line_info){
     center[0]= x_center;
     center[1]= y_center;
     return center;
-    
 }
