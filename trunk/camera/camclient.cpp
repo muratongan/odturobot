@@ -55,15 +55,22 @@ int* CamClient::getCircles()
 
 int* CamClient::getLines()
 {
-	printf("client: getlines");
-	fflush(stdout);
     int * array;
     char* istek = "getLines";
+	cerr<<"q";
     sendAll(istek);
+	cerr<<"w";
     array = (int *) malloc(sizeof(int));
+	cerr<<"e";
     recv(soketim, array, sizeof(int), 0);
+	cerr<<"r";
+	if (array[0]>0)
+{
     array = (int *) realloc(array, (1 + array[0] * 4) * sizeof(int));
+	cerr<<"t";
     recv(soketim, array+1, array[0] * 4 * sizeof(int), 0);
+	cerr<<"y";
+}
     return array;
 }
 

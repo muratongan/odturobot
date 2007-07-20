@@ -11,24 +11,21 @@ int main(void)
 {
     CamClient client(9034);
     Soket Hakem(6112);
-    int* center;
-    int* mycenter;
+    int linex, framex;
     int* line_info;
     int line_count;
-	cerr << "findline basladi\n" << flush;
-    
-	cerr << "findline davrandi\n" << flush;
+    float fark;
 
     while(true) {
 
         line_info = client.getLines();
         if(line_info[0]>0)
             {   
-    	     //cerr << "findline cizgi buldu\n" << flush;
-    		//Hakem.Davran(-0.2, 0, 10);
 
-                    center= getMiddlePoint(line_info);
-                    mycenter= client.getInfo();
+                    linex= *(getMiddlePoint(line_info));
+                    framex= *(client.getInfo()) / 2;
+                    fark = linex - framex;
+			/*
                     if(mycenter[0]/2>center[0]) {       // line solda
                         Hakem.Davran(0.2, 0.2, 10);
                     }
@@ -38,7 +35,15 @@ int main(void)
                     else{    // ilerle
                         Hakem.Davran(0.2, 0, 10);
                     }
+			*/
+		float aci = fark * (-0.001);
+		Hakem.Davran(0.2, 0 , 10);
+		cerr<<linex<<" "<<framex<<" "<<aci<<", ";
             }
+	else
+	{
+		Hakem.Davran(0.1, 0, 10);
+	}
      } 
     return 0;
 }
@@ -55,8 +60,8 @@ int* getMiddlePoint(int *line_info){
         x2_total = x2_total+line_info[i+2];
         y2_total = y2_total+line_info[i+3];
     }
-    x_center= x1_total/4;
-    y_center= y1_total/4;
+    x_center= (x1_total + x2_total)/(line_count * 2);
+    y_center= (y1_total + y2_total)/(line_count * 2);
     center[0]= x_center;
     center[1]= y_center;
     return center;
