@@ -23,23 +23,21 @@ int main(void)
 
         line_info = client.getLines();
         if(line_info[0]>0)
-            {
-	cerr << "findline cizgi buldu\n" << flush;
-		Hakem.Davran(-0.2, 0, 10);
+            {   
+    	     //cerr << "findline cizgi buldu\n" << flush;
+    		//Hakem.Davran(-0.2, 0, 10);
 
-           /*     center= getMiddlePoint(line_info);
-                mycenter= client.getInfo();
-                if(mycenter[0]/2>center[0]) {       // line solda
-                    Hakem.Davran(0.2, 0.2, 10);
-                }
-                else if(mycenter[0]/2<center[0]) {  // line sagda
-                    Hakem.Davran(0.2, -0.2, 10);
-                }
-                else{    // ilerle
-                    Hakem.Davran(0.2, 0, 10);
-                }*/
-             //   cout<<"line_detected";
-             //   return 0;
+                    center= getMiddlePoint(line_info);
+                    mycenter= client.getInfo();
+                    if(mycenter[0]/2>center[0]) {       // line solda
+                        Hakem.Davran(0.2, 0.2, 10);
+                    }
+                    else if(mycenter[0]/2<center[0]) {  // line sagda
+                        Hakem.Davran(0.2, -0.2, 10);
+                    }
+                    else{    // ilerle
+                        Hakem.Davran(0.2, 0, 10);
+                    }
             }
      } 
     return 0;
@@ -60,5 +58,6 @@ int* getMiddlePoint(int *line_info){
     y_center= y1_total/4;
     center[0]= x_center;
     center[1]= y_center;
+    return center;
     
 }

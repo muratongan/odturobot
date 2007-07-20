@@ -39,7 +39,7 @@ int main(void)
 					}
 				}
 			}
-			else if ((Hakem.sonar[0]+Hakem.sonar[15])/2<takip_mesafesi) // Eğer Sağa yakınsam
+			else if ((Hakem.sonar[0]+Hakem.sonar[15])/2<takip_mesafesi) // Eğer Sola yakınsam
 			{
 				if ((Hakem.sonar[3]+Hakem.sonar[4])/2<takip_mesafesi) // Karşıya da yakınsam
 				{
