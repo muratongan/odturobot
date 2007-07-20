@@ -33,6 +33,8 @@ int main(void)
     int i, j;
     
     Kamera mycam;
+    cvNamedWindow( "Marker", 1 );
+    cvNamedWindow( "Line", 1 );
 
     FD_ZERO(&master);    // ana listeyi ve gecici listeyi temizle
     FD_ZERO(&read_fds);
@@ -77,8 +79,6 @@ int main(void)
     // en büyük dosya tanimlayicisi hatirla
     fdmax = listener; // so far, it's this one
 
-    cvNamedWindow( "Marker", 1 );
-    cvNamedWindow( "Line", 1 );
 
 
     // ana döngü
@@ -120,9 +120,11 @@ int main(void)
                         FD_CLR(i, &master); // ana listeden cikar
                     } else {
                         // istemciden bir miktar veri geldi
+				cout<<"a";
                         
                         if (strcmp(buf, "getCircles") == 0)
                         {
+				cout<<"s";
                             mycam.capture();
                             int* a = mycam.getCircles();
                             
@@ -142,6 +144,7 @@ int main(void)
                         }
                         else if (strcmp(buf, "getLines") == 0)
                         {
+				cout<<"d";
                             mycam.capture();
                             int* a = mycam.getLines();
                             
@@ -156,7 +159,9 @@ cvPoint(a[4*j+1],a[4*j+2]), cvPoint(a[4*j+3],a[4*j+4]), CV_RGB(255,0,0), 3, 8 );
                                                 
                             int size;
                             size = a[0]*4+1;
-                            send(i, a, size * sizeof(int), 0);
+				cout<<size;
+                            size = send(i, a, size * sizeof(int), 0);
+				cout<<"f"<<size;
                         }
                         else if (strcmp(buf, "getInfo") == 0)
                         {
