@@ -77,7 +77,7 @@ class Planner:
             next = self.nextTransition()
             if next:
                 for beh in self.active:
-                    os.kill(beh["pid"], 0)
+                    os.kill(beh["pid"], 3)
                 self.changeState(next)
             # If there is no active behaviour, end function:
             if not self.active:
