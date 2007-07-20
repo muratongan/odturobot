@@ -64,8 +64,7 @@ int *Kamera::getLines()
     CvSeq* lines = 0;
     cvCvtColor( frame, dst, CV_BGR2GRAY );
     cvCanny( dst, dst, 50, 200, 3 );
-    lines = cvHoughLines2( dst, storage, CV_HOUGH_STANDARD, 1, 
-CV_PI/180, 100, 0, 0 );
+    lines = cvHoughLines2( dst, storage, CV_HOUGH_PROBABILISTIC, 1, CV_PI/180, 80, 30, 30 );
 
     count_line=lines->total;         //number of lines in the image
     line_info=(int*)malloc(sizeof(int)*(count_line*4+1));
@@ -74,21 +73,12 @@ CV_PI/180, 100, 0, 0 );
     int i = 0;int t = 1;
     for( i = 0; i < MIN(lines->total,100); i++ )
         {
-            float* line = (float*)cvGetSeqElem(lines,i);
-            float rho = line[0];
-            float theta = line[1];
-            CvPoint pt1, pt2;
-            double a = cos(theta), b = sin(theta);
-            double x0 = a*rho, y0 = b*rho;
-            pt1.x = cvRound(x0 + 1000*(-b));
-            pt1.y = cvRound(y0 + 1000*(a));
-            pt2.x = cvRound(x0 - 1000*(-b));
-            pt2.y = cvRound(y0 - 1000*(a));
+            CvPoint* line = (CvPoint*)cvGetSeqElem(lines,i);
             
-            line_info[t] = pt1.x;     // x coordinate of the point1
-            line_info[t+1] = pt1.y;   // y coordinate of the point1
-            line_info[t+2] = pt2.x;   // x coordinate of the point2
-            line_info[t+3] = pt2.y;   // y coordinate of the point2
+            line_info[t] = line[0].x;     // x coordinate of the point1
+            line_info[t+1] = line[0].y;   // y coordinate of the point1
+            line_info[t+2] = line[1].x;   // x coordinate of the point2
+            line_info[t+3] = line[1].y;   // y coordinate of the point2
             t = t+4;   
         }
     return line_info;
