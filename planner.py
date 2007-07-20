@@ -3,6 +3,7 @@
 import os
 import subprocess
 import select
+import signal
 from xml.dom.minidom import parse
 
 
@@ -77,7 +78,7 @@ class Planner:
             next = self.nextTransition()
             if next:
                 for beh in self.active:
-                    os.kill(beh["pid"], 3)
+                    os.kill(beh["pid"], signal.SIGQUIT)
                 self.changeState(next)
             # If there is no active behaviour, end function:
             if not self.active:
