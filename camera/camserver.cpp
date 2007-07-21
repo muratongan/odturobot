@@ -147,7 +147,7 @@ int main(void)
 				cout<<"d";
                             mycam.capture();
                             int* a = mycam.getLines();
-                            
+/*                            
                             int j;
                             for( j= 0; j < a[0]; j++ )
                                 {
@@ -156,7 +156,8 @@ cvPoint(a[4*j+1],a[4*j+2]), cvPoint(a[4*j+3],a[4*j+4]), CV_RGB(255,0,0), 3, 8 );
                                 }
                             
                             cvShowImage( "Line", mycam.frame );
-                                                
+			     if( (cvWaitKey(10) & 255) == 27 ) break;
+  */                                             
                             int size;
                             size = a[0]*4+1;
 				cout<<size;
