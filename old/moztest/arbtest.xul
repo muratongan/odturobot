@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="arbitrator">
 <script src="chrome://robot/content/connection.js"/>
 <script src="chrome://robot/content/arbitrator.js"/>
 <script>
-var sobj;
+var sobj=new Arbitrator(7777);
 </script>
-<button label="start" onclick="sobj=new Arbitrator(7777);"/>
+<button label="start arbitrator" onclick="sobj=new Arbitrator(7777);"/>
 </window>

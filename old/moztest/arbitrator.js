@@ -16,7 +16,7 @@ function Arbitrator(watchdogport)
 		}
 		catch(err)
 		{
-			alert(err);
+			//alert(err);
 		}
 		conn.send("watchdog.setspeed("+arbitrator.translation+","+arbitrator.rotation+");");
 		arbitrator.weight=Math.max(1,Math.pow(arbitrator.weight,0.125));
@@ -38,7 +38,7 @@ function Arbitrator(watchdogport)
 		}
 		catch(err)
 		{
-			alert(err);
+			//alert(err);
 		}
 	};
 	var noconnhandler=function()
