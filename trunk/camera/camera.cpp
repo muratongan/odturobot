@@ -8,6 +8,7 @@ Kamera::Kamera()
     getchar();
     throw 0;
   }
+  capture();
 }
 
 void Kamera::capture()
@@ -57,30 +58,37 @@ int *Kamera::getLines()
 {
     int count_line;
     int *line_info;   
+	cout<<"1"<<flush;
     
     IplImage* dst = cvCreateImage( cvGetSize(frame), 8, 1 );
     IplImage* color_dst = cvCreateImage( cvGetSize(frame), 8, 3 );
     CvMemStorage* storage = cvCreateMemStorage(0);
     CvSeq* lines = 0;
+	cout<<"2"<<flush;
     cvCvtColor( frame, dst, CV_BGR2GRAY );
-    cvCanny( dst, dst, 50, 200, 3 );
+	cout<<"3"<<flush;
+//    cvCanny( dst, dst, 50, 200, 3 );
+//	cout<<"4"<<flush;
     lines = cvHoughLines2( dst, storage, CV_HOUGH_PROBABILISTIC, 1, CV_PI/180, 80, 30, 30 );
+	cout<<"5"<<flush;
 
     count_line=lines->total;         //number of lines in the image
     line_info=(int*)malloc(sizeof(int)*(count_line*4+1));
     line_info[0]=count_line;    
+	cout<<line_info[0]<<" "<<flush;
 
     int i = 0;int t = 1;
-    for( i = 0; i < MIN(lines->total,100); i++ )
+    for( i = 0; i < lines->total; i++ )
         {
             CvPoint* line = (CvPoint*)cvGetSeqElem(lines,i);
             
-            line_info[t] = line[0].x;     // x coordinate of the point1
-            line_info[t+1] = line[0].y;   // y coordinate of the point1
-            line_info[t+2] = line[1].x;   // x coordinate of the point2
-            line_info[t+3] = line[1].y;   // y coordinate of the point2
+            line_info[t] = cvRound(line[0].x);     // x coordinate of the point1
+            line_info[t+1] = cvRound(line[0].y);   // y coordinate of the point1
+            line_info[t+2] = cvRound(line[1].x);   // x coordinate of the point2
+            line_info[t+3] = cvRound(line[1].y);   // y coordinate of the point2
             t = t+4;   
         }
+	cout<<"gl "<<flush;
     return line_info;
 }
 
