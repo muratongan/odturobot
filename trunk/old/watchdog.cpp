@@ -176,13 +176,17 @@ int main(int argc, char **argv)
 						}
 					}
 					// Aldığın Kararları Uygula
-					std::cout<<"hiz: "<<yenihiz<<"aci"<<yeniaci<<std::endl;
-					konum.SetSpeed(yenihiz,yeniaci);
+					std::cout<<"hiz: "<<yenihiz<<"acii"<<yeniaci<<std::endl;
+				std::cout<<"S1"<<std::endl<<std::flush;
+				konum.SetSpeed(yenihiz,yeniaci);
+				std::cout<< "s2"<<std::endl<<std::flush;
 				}
 		                std::cout<<"Bağlantı kesildi"<<std::endl<<std::flush;
 				close(hakem);
 				yenihiz=0;
+				std::cout<<"S1"<<std::flush;
 				konum.SetSpeed(yenihiz,yeniaci);
+				std::cout<< "s2"<<std::endl<<std::flush;
 			}
 			catch (int hata)
 			{

@@ -11,7 +11,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#define PORT 9034   // dinledigimiz port
+#define PORT 40000   // dinledigimiz port
 
 #include "camera.h"
 
@@ -32,9 +32,12 @@ int main(void)
     int addrlen;
     int i, j;
     
+                        cout<<"ILK"<<endl<<flush;
+
     Kamera mycam;
     cvNamedWindow( "Marker", 1 );
     cvNamedWindow( "Line", 1 );
+                        cout<<"KAMERA"<<endl<<flush;
 
     FD_ZERO(&master);    // ana listeyi ve gecici listeyi temizle
     FD_ZERO(&read_fds);
@@ -61,12 +64,14 @@ int main(void)
         perror("bind");
         exit(1);
     }
+                        cout<<"BIND"<<endl<<flush;
 
     // listen
     if (listen(listener, 10) == -1) {
         perror("listen");
         exit(1);
     }
+                        cout<<"LISTEN"<<endl;
 
 
 
@@ -95,8 +100,10 @@ int main(void)
                 if (i == listener) {
                     // handle new connections
                     addrlen = sizeof(remoteaddr);
+                        cout<<"bekliyor"<<endl;
                     if ((newfd = accept(listener, (struct sockaddr *)&remoteaddr,
                                                   (socklen_t*) &addrlen)) == -1) {
+                        cout<<"KABUL ETMEDI"<<endl;
                         perror("accept");
                     } else {
                         FD_SET(newfd, &master); // ana listeye ekle
@@ -120,11 +127,9 @@ int main(void)
                         FD_CLR(i, &master); // ana listeden cikar
                     } else {
                         // istemciden bir miktar veri geldi
-				cout<<"a";
                         
                         if (strcmp(buf, "getCircles") == 0)
                         {
-				cout<<"s";
                             mycam.capture();
                             int* a = mycam.getCircles();
                             
@@ -144,25 +149,21 @@ int main(void)
                         }
                         else if (strcmp(buf, "getLines") == 0)
                         {
-				cout<<"d";
                             mycam.capture();
                             int* a = mycam.getLines();
-/*                            
+                            
                             int j;
                             for( j= 0; j < a[0]; j++ )
                                 {
-                                     cvLine( mycam.frame,
-cvPoint(a[4*j+1],a[4*j+2]), cvPoint(a[4*j+3],a[4*j+4]), CV_RGB(255,0,0), 3, 8 );
+                                     cvLine( mycam.frame,cvPoint(a[4*j+1],a[4*j+2]), cvPoint(a[4*j+3],a[4*j+4]), CV_RGB(255,0,0), 3, 8 );
                                 }
                             
                             cvShowImage( "Line", mycam.frame );
 			     if( (cvWaitKey(10) & 255) == 27 ) break;
-  */                                             
+                                               
                             int size;
                             size = a[0]*4+1;
-				cout<<size;
                             size = send(i, a, size * sizeof(int), 0);
-				cout<<"f"<<size;
                         }
                         else if (strcmp(buf, "getInfo") == 0)
                         {
