@@ -52,8 +52,10 @@ int sendall(int s, const char *buf, int *len)
 // Ana Fonksiyon
 int main(int argc, char **argv)
 {
+	std::cout << "Hostname is: " << PlayerCc::PLAYER_HOSTNAME << std::endl;
+	std::cout << "Port is: " << PlayerCc::PLAYER_PORTNUM << std::endl;
 	// Kontrol Değerleri
-	float yakin= 0.2;
+	float yakin= 0.3;
 	float hiz= 0.2;
 	float aci= 30;
 
@@ -80,6 +82,7 @@ int main(int argc, char **argv)
 		Position2dProxy konum (&robot, gIndex);
 		SonarProxy sonar (&robot, gIndex);
 		std::cout << robot << std::endl;
+	konum.SetMotorEnable(true);
 
 		// Dinleme Soketini Yarat
 	    if ((dinleyici = socket(AF_INET, SOCK_STREAM, 0)) == -1)
@@ -122,7 +125,7 @@ int main(int argc, char **argv)
 
 				// Döngüyü Başlat
 				while (1)
-				{
+				{		
 					robot.Read();
 					veri = "arbitrator.sonar=[";
 					for (int i=0;i<16;i++)
@@ -148,10 +151,12 @@ int main(int argc, char **argv)
 					if (alinanbayt>0)
 					{
 						tampon[alinanbayt]=0;
-						std::cout<<"tampon: "<<tampon<<std::endl;
+					//	std::cout<<"tampon: "<<tampon<<std::endl;
 						std::sscanf(tampon," watchdog.setspeed(%f,%f);",&yenihiz,&yeniaci);
-						std::cout<<"Yeni hız: "<<yenihiz<<std::endl;
 					}
+
+					for (int k=0; k<15; k++) std::cout<<sonar[k]<<" ";
+					std::cout<<"istenen: "<<yenihiz;
 
 					// İleri Giderken Önünde Bir Şey Varsa Hızı Sıfırla
 					if (yenihiz>0.0)
@@ -170,11 +175,11 @@ int main(int argc, char **argv)
 							yenihiz=0;
 						}
 					}
-					std::cout<<"kesin hiz: "<<yenihiz<<std::endl;
 					// Aldığın Kararları Uygula
+					std::cout<<"hiz: "<<yenihiz<<"aci"<<yeniaci<<std::endl;
 					konum.SetSpeed(yenihiz,yeniaci);
 				}
-                std::cout<<"Bağlantı kesildi"<<std::endl<<std::flush;
+		                std::cout<<"Bağlantı kesildi"<<std::endl<<std::flush;
 				close(hakem);
 				yenihiz=0;
 				konum.SetSpeed(yenihiz,yeniaci);
