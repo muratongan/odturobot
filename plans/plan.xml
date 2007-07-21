@@ -1,15 +1,6 @@
-<plan start="WaitPeople">
+<plan start="Welcome">
     
     <states>
-        <state name="WaitPeople">
-            <behaviours>
-                <behaviour name="DetectPeople" />
-            </behaviours>
-            <transitions>
-                <transition expression="DetectPeople=detected" nextstate="Welcome" />
-            </transitions>
-        </state>
-        
         <state name="Welcome">
             <behaviours>
                 <behaviour name="Voice" arguments="welcome.wav"/>
