@@ -36,7 +36,7 @@ ODTÜ Müzesi, çizgi ile işaretlenmiş bir yoldan ve yol üzerinde bulunan çe
         
         <state name="Explain">
             <behaviours>
-                <behaviour name="Voice" arguments="hello.wav"/>
+                <behaviour name="Voice" arguments="explain.wav"/>
 		<behaviour name="Stop" />
             </behaviours>
             <transitions>
@@ -46,7 +46,7 @@ ODTÜ Müzesi, çizgi ile işaretlenmiş bir yoldan ve yol üzerinde bulunan çe
     
         <state name="Finish">
             <behaviours>
-                <behaviour name="Voice" arguments="welcome.wav"/>
+                <behaviour name="Voice" arguments="bye.wav"/>
 		<behaviour name="Stop" />
             </behaviours>
             <transitions>
@@ -55,4 +55,5 @@ ODTÜ Müzesi, çizgi ile işaretlenmiş bir yoldan ve yol üzerinde bulunan çe
     </states>
 </plan>
 }}}
+ 
  
