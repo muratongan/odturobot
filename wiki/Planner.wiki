@@ -10,34 +10,15 @@ Planner'ın işleyişini daha iyi görmek için örnek bir senaryo ve buna ait X
 ODTÜ Müzesi, çizgi ile işaretlenmiş bir yoldan ve yol üzerinde bulunan çeşitli eserler için de ayrıca işaretlerden oluşsun. Robotumuz, müzenin girişinde beklesin. İnsanlar girdiğinde karşılayıp, çizgi izlemeye başlayarak her gördüğü eseri insanlara açıklasın ve yoluna devam ederek yolun sonuna ulaştığında ziyaretçileri uğurlasın. Bu senaryoyu açılayan plan dosyası aşağıdaki gibidir:
 
 {{{
-<plan>
-    
-    <behaviours>
-        <behaviour name="DetectPeople" />
-        <behaviour name="SayHello" />
-        <behaviour name="LineTracking" />
-        <behaviour name="ObstacleAvoidance" />
-        <behaviour name="DetectMarker" />
-        <behaviour name="Explain" />
-        <behaviour name="SayGoodbye" />
-    </behaviours>
-    
+<plan start="Welcome">
     <states>
-        <state name="WaitPeople">
-            <behaviours>
-                <behaviour name="DetectPeople" />
-            </behaviours>
-            <transitions>
-                <transition expression="DetectPeople=detected" nextstate="SayHello" />
-            </transitions>
-        </state>
-        
+
         <state name="Welcome">
             <behaviours>
-                <behaviour name="SayHello" />
+                <behaviour name="Voice" arguments="welcome.wav"/>
             </behaviours>
             <transitions>
-                <transition expression="Welcome=finished" nextstate="FindMarker" />
+                <transition expression="Voice=finished" nextstate="FindMarker" />
             </transitions>
         </state>
         
@@ -48,31 +29,30 @@ ODTÜ Müzesi, çizgi ile işaretlenmiş bir yoldan ve yol üzerinde bulunan çe
                 <behaviour name="DetectMarker" />
             </behaviours>
             <transitions>
-                <transition expression="DetectMarker=standartmarker" nextstate="Explain" />
+                <transition expression="DetectMarker=standartmarker" nextstate="Explain"/>
                 <transition expression="DetectMarker=endmarker" nextstate="Finish" />
             </transitions>
         </state>
         
         <state name="Explain">
             <behaviours>
-                <behaviour name="Explain" />
+                <behaviour name="Voice" arguments="hello.wav"/>
+		<behaviour name="Stop" />
             </behaviours>
             <transitions>
-                <transition expression="Explain=finished" nextstate="FindMarker" />
+                <transition expression="Voice=finished" nextstate="FindMarker" />
             </transitions>
         </state>
     
         <state name="Finish">
             <behaviours>
-                <behaviour name="SayGoodbye" />
+                <behaviour name="Voice" arguments="welcome.wav"/>
+		<behaviour name="Stop" />
             </behaviours>
             <transitions>
-                <transition expression="Explain=finished" nextstate="FindMarker" />
             </transitions>
         </state>
-        
     </states>
-    
-    <start>Wait People</start>
 </plan>
 }}}
+ 
