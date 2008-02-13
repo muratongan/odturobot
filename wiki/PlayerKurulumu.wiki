@@ -3,6 +3,12 @@
 
 Player yazılımı, player projesinin bir parçasıdır. Robot kontrolü için donanımdan bağımsız bir platform oluşturmayı sağlar. Projemizde, robotla iletişim kurmak için player kütüphanesini kullanıyoruz.
 
+=Ek Paketler=
+Asagidaki ek paketlerin de kurulmasi gerekli:
+  libavcodec1d libavformat1d libavutil1d libboost-signals1.34.1 libcv1 libcvaux1 libdc1394-13 libgsm1 libhighgui1 libplayerc++2 libplayerc2 libplayercore2
+  libplayerdrivers2 libplayererror2 libplayerjpeg2 libplayertcp2 libplayerxdr2
+
+
 =Kurulum=
 Player programını Pardus'ta aşağıdaki adımları izleyerek bulabilirsiniz. Diğer Linux dağıtımlarında da benzer şekilde kurulumu yapılabilir. Bazı dağıtımlar, bu yazılımı paket olarak da sağlayabilirler.
   * Önce http://playerstage.sf.net adresinin “download” kısmına girip player-2.0.3.tar.bz2 ve stage-2.0.3.tar.bz2 dosyalarını ev dizinimize indiriyoruz.
@@ -27,5 +33,3 @@ Bu adımlardan sonra bir aksilik çıkmazsa player'ın kurulumu tamamlanmış ol
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 }}}
 Artık, player ile robotumuzu kontrol etmeye başlayabiliriz.
- 
-
