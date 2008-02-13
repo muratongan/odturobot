@@ -7,7 +7,7 @@ Player yazılımı, player projesinin bir parçasıdır. Robot kontrolü için d
 Asagidaki ek paketlerin de kurulmasi gerekli:
   libavcodec1d libavformat1d libavutil1d libboost-signals1.34.1 libcv1 libcvaux1 libdc1394-13 libgsm1 libhighgui1 libplayerc++2 libplayerc2 libplayercore2
   libplayerdrivers2 libplayererror2 libplayerjpeg2 libplayertcp2 libplayerxdr2
-
+libboost-thread-dev
 
 =Kurulum=
 Player programını Pardus'ta aşağıdaki adımları izleyerek bulabilirsiniz. Diğer Linux dağıtımlarında da benzer şekilde kurulumu yapılabilir. Bazı dağıtımlar, bu yazılımı paket olarak da sağlayabilirler.
